@@ -1,0 +1,12 @@
+{
+  "name": "fe-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "vue": "^2.2.1",
+    "vue-resource": "^1.2.0"
+  },
+  "author": "jay zangwill"
+}
