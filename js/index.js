@@ -2,20 +2,45 @@ window.onload = function() {
 	let vm = new Vue({
 		el: "#app",
 		data: {
-			title: {},
-			loading: true
+			title: [],
+			loading: true,
+			time:null,
+			i: 0
 		},
-		created() {
-			this.$http.get('https://cnodejs.org/api/v1/topics').then((response) => {
-				this.title = response.data.data;
-				this.loading = false;
-			}, (response) => {
-				console.log(response);
-			});
+		mounted: function() {
+			this.loadData();
+			document.addEventListener("scroll",this.scroll);
 		},
 		methods: {
-			reload: function() {
+			reload() {
 				window.location.reload();
+			},
+			scroll(){
+				let self=this;
+				if((document.body.scrollTop || document.documentElement.scrollTop) >= document.body.offsetHeight-1000) {
+					self.loading=true;
+					self.loadData();
+				}
+			},
+			loadData() {
+				if(this.time){
+					clearTimeout(this.time);
+				}
+				this.time=setTimeout(()=>{
+				this.$http.get('https://cnodejs.org/api/v1/topics').then((response) => {
+					if(this.i===response.data.data.length){
+						this.loading=false;
+						document.removeEventListener("scroll",this.scroll);
+						return;
+					}
+					var temp=response.data.data.slice(this.i,this.i+10);
+					this.title=this.title.concat(temp);
+					this.loading = false;
+					this.i+=10;
+				}, (response) => {
+					console.log(response);
+				});
+				},300)
 			}
 		}
 	});

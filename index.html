@@ -17,7 +17,6 @@
 					<a @click="reload" href="javascript:;"><i class="iconfont">&#xe600;</i></a>
 				</form>
 			</header>
-			<div v-if="loading" class="loading">加载中...</div>
 			<main v-for="data in title">
 				<h2 v-text="data.title"></h2>
 				<div class="label">
@@ -34,6 +33,7 @@
 					<aside><img :src="data.author.avatar_url" alt="照片"></aside>
 				</article>
 			</main>
+			<div v-if="loading" class="loading">加载中...</div>
 		</div>
 		<script src="node_modules/.2.2.1@vue/dist/vue.min.js"></script>
 		<script src="node_modules/.1.2.0@vue-resource/dist/vue-resource.min.js"></script>
